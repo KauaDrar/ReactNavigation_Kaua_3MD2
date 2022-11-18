@@ -36,23 +36,29 @@ export default function Clima({ route }) {
   return (
     <View style={styles.bloco}>
       <Text style={styles.nomeCidade}>{cidade}</Text>
-      {loading && <ActivityIndicator size="large" color="#FFF" />}
-      {!loading && (
-        <View style={{flexDirection: "row", flexWrap: "wrap"}}>
-          <FlatList
-            style={{ flexDirection: "row", flexWrap: "wrap" }}
-            data={climas}
-            renderItem={({ item }) => {
-              return (
-                <View style={styles.clima}>
-                  <Text style={styles.data}>{item.date}</Text>
-                  <Text>Max: {item.max}</Text>
-                  <Text>Min: {item.min}</Text>
-                </View>
-              );
-            }}
-          />
+      {loading && (
+        <View style={{flex: 1, justifyContent: "center"}}>
+          <ActivityIndicator size="large" color="#FFF" />
         </View>
+      )}
+      {!loading && (
+        <FlatList
+        style={{ width: "100%"}}
+        alignItems="center"
+        showsVerticalScrollIndicator={false}
+        data={climas}
+        keyExtractor={item => item.date}
+        numColumns={2}
+        renderItem={({ item }) => {
+          return (
+            <View style={styles.clima}>
+              <Text style={styles.data}>{item.date}</Text>
+              <Text>Max: {item.max}</Text>
+              <Text>Min: {item.min}</Text>
+            </View>
+          );
+        }}
+      />
       )}
     </View>
   );
@@ -92,6 +98,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   clima: {
+    marginVertical: 10,
     marginHorizontal: 10,
   },
   data: {
